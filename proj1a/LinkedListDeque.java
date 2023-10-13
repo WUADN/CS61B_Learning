@@ -73,7 +73,7 @@ public class LinkedListDeque<T> {
         if (sentinel.next == sentinel) {
             return null;
         } else {
-            size --;
+            size--;
             T i = sentinel.prv.itemWu;
             StuffNode lastNode = sentinel.prv;
             StuffNode secondLastNode = lastNode.prv;
@@ -105,7 +105,7 @@ public class LinkedListDeque<T> {
     /*get the index item */
     public T get(int index) {
         StuffNode ptr = sentinel;
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i <= index; i++) {
             ptr = ptr.next;
             if (ptr == sentinel) {
                 return null;
@@ -122,7 +122,7 @@ public class LinkedListDeque<T> {
 
     /*helper function for getRecursive */
     private StuffNode helperRecursive(int index, StuffNode node) {
-        if (index == 0) {
+        if (index == -1) {
             return node;
         }
         StuffNode ptrNode = node;
