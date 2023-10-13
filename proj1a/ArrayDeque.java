@@ -1,87 +1,93 @@
-public class ArrayDeque<Wu>{
-    private Wu[] items;
+public class ArrayDeque<T> {
+    private T[] items;
     private int size;
     private int front;
 
 
-    public ArrayDeque(){
-        items = (Wu[]) new Object[8];
-        front = size = 0;
+    public ArrayDeque() {
+        items = (T[]) new Object[8];
+        front = 0;
+        size = 0;
     }
 
-       /*获取队列的容量 */
-    public int capacity(){
+    /*获取队列的容量 */
+    public int capacity() {
         return items.length;
     }
 
-      /*if the deque is fullfilled, resize the deque */
-    public void resize(){
-        Wu[] newarr = (Wu[]) new Object[capacity() * 2];
+    /*if the deque is fullfilled, resize the deque */
+    public void resize() {
+        T[] newarr = (T[]) new Object[capacity() * 2];
         System.arraycopy(items, front, newarr, 0, size);
         items = newarr;
         front = 0;
     }
 
     /*check wheather the deque is empty  */
-    public boolean isEmpty(){
-       return size == 0;
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     /*return size */
-    public int size(){
+    public int size() {
         return size;
     }
 
     /*add last item */
-    public void addLast(Wu item){
-        if(size == items.length){
+    public void addLast(T item) {
+        if (size == items.length) {
             resize();
         }
         int rear = (front + size) % capacity();
         items[rear] = item;
-        size ++;
+        size++;
     }
 
     /*remove last item */
-    public void removeLast(){
-        if(size == 0){
-            return;
+    public T removeLast() {
+        if (size == 0) {
+            return null;
         }
         int last = (front + size - 1) % capacity();
+        T item = items[last];
         items[last] = null;
-        size --;
+        size--;
+        return item;
     }
 
     /*add first items */
-    public void addFirst(Wu item){
-        front --;
+    public void addFirst(T item) {
+        front--;
     
-        if(front < 0){
+        if (front < 0) {
             front = capacity() - 1;
         }
         items[front] = item;
 
-        size --;
+        size++;
     }
 
     /*remove first item */
-    public void removeFirst(){
-        if(size == 0){
-            return;
+    public T removeFirst() {
+        if (size == 0) {
+            return null;
         }
+        T item = items[front];
         front = (front + 1) % capacity();
+        size--;
+        return item;
+        
     }
 
     /*get the index item */
-    public Wu get(int index){
+    public T get(int index) {
         int goalIndex = (front + index) % capacity();
         return items[goalIndex];
     }
     
-    public void printDeque(){
-        for(int i = 0; i < size; i++){
+    public void printDeque() {
+        for (int i = 0; i < size; i++) {
             System.out.print(get(i) + " ");
         }
     }
-    
 }
