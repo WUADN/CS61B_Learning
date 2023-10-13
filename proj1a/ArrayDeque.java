@@ -11,12 +11,12 @@ public class ArrayDeque<T> {
     }
 
     /*获取队列的容量 */
-    public int capacity() {
+    private int capacity() {
         return items.length;
     }
 
     /*if the deque is fullfilled, resize the deque */
-    public void resize() {
+    private void resize() {
         T[] newarr = (T[]) new Object[capacity() * 2];
         System.arraycopy(items, front, newarr, 0, size);
         items = newarr;

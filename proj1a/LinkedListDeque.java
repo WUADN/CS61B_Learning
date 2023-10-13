@@ -29,14 +29,6 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    /*initialize a deque */
-    public LinkedListDeque(T i) {
-        sentinel = new StuffNode();
-        StuffNode first = new StuffNode(i, sentinel, sentinel);
-        sentinel.next = first;
-        sentinel.prv = first;
-        size = 0;
-    }
     /*Adds an item of type wu to the front of the deque */
     public void addFirst(T item) {
         StuffNode first = sentinel.next;
@@ -81,7 +73,7 @@ public class LinkedListDeque<T> {
         if (sentinel.next == sentinel) {
             return null;
         } else {
-            size -= size;
+            size --;
             T i = sentinel.prv.itemWu;
             StuffNode lastNode = sentinel.prv;
             StuffNode secondLastNode = lastNode.prv;
@@ -129,7 +121,7 @@ public class LinkedListDeque<T> {
     }
 
     /*helper function for getRecursive */
-    public StuffNode helperRecursive(int index, StuffNode node) {
+    private StuffNode helperRecursive(int index, StuffNode node) {
         if (index == 0) {
             return node;
         }
