@@ -132,13 +132,6 @@ public class LinkedListDeque<T> {
         }
         return getRecursiveHelp(sentinel.next, index);
     }
-    public static void main(String args[]){
-        LinkedListDeque<String> list = new LinkedListDeque<>();
-        list.addFirst("string");
-        System.out.println(list.getRecursive(0));
-        list.addFirst("new");
-        System.out.println(list.getRecursive(1));
-    }
 
 } 
 
