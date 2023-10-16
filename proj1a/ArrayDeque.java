@@ -18,7 +18,7 @@ public class ArrayDeque<T> {
     /*if the deque is fullfilled, resize the deque */
     private void resize() {
         T[] newarr = (T[]) new Object[capacity() * 2];
-        int end = front + size -1;
+        int end = front + size - 1;
         if (end < capacity()) {
             System.arraycopy(items, front, newarr, 0, size);
             items = newarr;

@@ -1,3 +1,7 @@
+import java.util.LinkedList;
+
+import org.w3c.dom.Node;
+
 public class LinkedListDeque<T> {
     private class StuffNode {
         private T itemWu;
@@ -114,22 +118,27 @@ public class LinkedListDeque<T> {
         return ptr.itemWu;
     }
 
-    /*use recursive to get index item */
+    private T getRecursiveHelp(StuffNode next, int index) {
+    if (index == 0) {
+        return next.itemWu;
+    } else {
+        return getRecursiveHelp(next.next, index - 1);
+    }
+    }
+
     public T getRecursive(int index) {
-        StuffNode ptr = helperRecursive(index, sentinel);
-        return ptr.itemWu;
-    }
-
-    /*helper function for getRecursive */
-    private StuffNode helperRecursive(int index, StuffNode node) {
-        if (index == -1) {
-            return node;
+        if (index >= size) {
+            return null;
         }
-        StuffNode ptrNode = node;
-        ptrNode = ptrNode.next; 
-        return helperRecursive(index - 1, helperRecursive(index - 1, ptrNode));
+        return getRecursiveHelp(sentinel.next, index);
     }
-
+    public static void main(String args[]){
+        LinkedListDeque<String> list = new LinkedListDeque<>();
+        list.addFirst("string");
+        System.out.println(list.getRecursive(0));
+        list.addFirst("new");
+        System.out.println(list.getRecursive(1));
+    }
 
 } 
 
