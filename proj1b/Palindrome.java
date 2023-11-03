@@ -19,7 +19,7 @@ public class Palindrome{
         }
         char a = cd.removeFirst();
         char b = cd.removeLast();
-        if(a == b){
+        if(Math.abs(a - b) == 0){
             return isPalindromeHelper(cd);
         }else{
             return false;
