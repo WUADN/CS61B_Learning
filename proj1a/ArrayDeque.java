@@ -109,6 +109,7 @@ public class ArrayDeque<T> {
         if (size == length - 1) {
             grow();
         }
+        
         array[last] = item;
         last = plusOne(last, length);
         size++;
