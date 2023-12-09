@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- *  A hash table-backed Map implementation. Provides amortized constant time
- *  access to elements via get(), remove(), and put() in the best case.
+ * A hash table-backed Map implementation. Provides amortized constant time
+ * access to elements via get(), remove(), and put() in the best case.
  *
- *  @author Your name here
+ * @author Your name here
  */
 public class MyHashMap<K, V> implements Map61B<K, V> {
 
@@ -35,9 +35,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         }
     }
 
-    /** Computes the hash function of the given key. Consists of
-     *  computing the hashcode, followed by modding by the number of buckets.
-     *  To handle negative numbers properly, uses floorMod instead of %.
+    /**
+     * Computes the hash function of the given key. Consists of
+     * computing the hashcode, followed by modding by the number of buckets.
+     * To handle negative numbers properly, uses floorMod instead of %.
      */
     private int hash(K key) {
         if (key == null) {
@@ -48,24 +49,51 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return Math.floorMod(key.hashCode(), numBuckets);
     }
 
-    /* Returns the value to which the specified key is mapped, or null if this
+    /*
+     * Returns the value to which the specified key is mapped, or null if this
      * map contains no mapping for the key.
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        int index = hash(key);
+        return buckets[index].get(key);
+    }
+
+    private void resize() {
+        ArrayMap<K, V>[] newbuckets;
+        newbuckets = new ArrayMap[buckets.length * 2];
+        for (int i = 0; i < newbuckets.length; i++) {
+            newbuckets[i] = new ArrayMap<>();
+        }
+        for (int i = 0; i < buckets.length; i++) {
+            Set<K> keys = buckets[i].keySet();
+            for (K k : keys) {
+                int index = hash(k);
+                buckets[index].put(k, buckets[i].get(k));
+            }
+        }
+        buckets = newbuckets;
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (loadFactor() > MAX_LF) {
+            resize();
+        }
+        int index = hash(key);
+        if (!buckets[index].containsKey(key)) {
+            buckets[index].put(key, value);
+            size++;
+        } else {
+            buckets[index].put(key, value);
+        }
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
@@ -76,17 +104,21 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         throw new UnsupportedOperationException();
     }
 
-    /* Removes the mapping for the specified key from this map if exists.
+    /*
+     * Removes the mapping for the specified key from this map if exists.
      * Not required for this lab. If you don't implement this, throw an
-     * UnsupportedOperationException. */
+     * UnsupportedOperationException.
+     */
     @Override
     public V remove(K key) {
         throw new UnsupportedOperationException();
     }
 
-    /* Removes the entry for the specified key only if it is currently mapped to
+    /*
+     * Removes the entry for the specified key only if it is currently mapped to
      * the specified value. Not required for this lab. If you don't implement this,
-     * throw an UnsupportedOperationException.*/
+     * throw an UnsupportedOperationException.
+     */
     @Override
     public V remove(K key, V value) {
         throw new UnsupportedOperationException();

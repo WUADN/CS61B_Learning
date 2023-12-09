@@ -2,6 +2,8 @@ package lab9tester;
 
 import static org.junit.Assert.*;
 
+import java.util.Set;
+
 import org.junit.Test;
 import lab9.BSTMap;
 
@@ -22,13 +24,13 @@ public class TestBSTMap {
         }
     }
 
-    //assumes put/size/containsKey/get work
+    // assumes put/size/containsKey/get work
     @Test
     public void sanityClearTest() {
         BSTMap<String, Integer> b = new BSTMap<String, Integer>();
         for (int i = 0; i < 455; i++) {
             b.put("hi" + i, 1 + i);
-            //make sure put is working via containsKey and get
+            // make sure put is working via containsKey and get
             assertTrue(null != b.get("hi" + i));
             assertTrue(b.get("hi" + i).equals(1 + i));
             assertTrue(b.containsKey("hi" + i));
@@ -77,13 +79,61 @@ public class TestBSTMap {
         assertEquals(456, b.size());
     }
 
-    //assumes get/containskey work
+    // assumes get/containskey work
     @Test
     public void sanityPutTest() {
         BSTMap<String, Integer> b = new BSTMap<String, Integer>();
         b.put("hi", 1);
         assertTrue(b.containsKey("hi"));
         assertTrue(b.get("hi") != null);
+    }
+
+    @Test
+    public void keySetTest() {
+        BSTMap<String, Integer> b = new BSTMap<>();
+        String s = "";
+        for (int i = 0; i < 30; i++) {
+            s = s + i;
+            b.put(s, i);
+        }
+        String st = "01";
+        Set<String> set = b.keySet();
+
+        assertTrue(set.contains("0"));
+        for (int i = 2; i < 30; i++) {
+            st = st + i;
+            assertTrue(set.contains(s));
+        }
+    }
+
+    @Test
+    public void removeSingleArgumentTest() {
+        BSTMap<String, Integer> b = new BSTMap<>();
+        String s = "";
+        for (int i = 0; i < 30; i++) {
+            s = s + i;
+            b.put(s, i);
+        }
+        String sr = "";
+        for (int i = 0; i < 30; i++) {
+            sr = sr + i;
+            b.remove(sr);
+            assertEquals(null, b.get(sr));
+        }
+    }
+
+    @Test
+    public void removeDoubleArgumentTest() {
+        BSTMap<String, Integer> b = new BSTMap<>();
+        String s = "";
+        for (int i = 0; i < 30; i++) {
+            s = s + i;
+            b.put(s, i);
+        }
+        Integer falseRemove = b.remove("01", 0);
+        assertTrue(falseRemove == null);
+        Integer trueRemove = b.remove("01", 1);
+        assertTrue(trueRemove.equals(1));
     }
 
     public static void main(String[] args) {
